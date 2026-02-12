@@ -1,0 +1,27 @@
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Configuración de base de datos (IMPORTANTE - no subir contraseñas)
+config.py
+*config*.py
+*.env
+.env
+database_config.py
+
+# Archivos de IDE
+.vscode/
+.idea/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

@@ -1,0 +1,581 @@
+{
+  "motor": "postgresql",
+  "user": "admin_invernadero",
+  "password": "invernadero2026",
+  "host": "localhost",
+  "port": 5432,
+  "db": "invernadero_hidroponico",
+  
+  "entidades": [
+    {
+      "nombre": "invernadero",
+      "descripcion": "Tabla principal de invernaderos registrados en el sistema ",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "serial",
+          "longitud": 0,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Identificador único del invernadero"
+        },
+        {
+          "nombre": "nombre",
+          "tipo_dato": "varchar",
+          "longitud": 100,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Nombre del invernadero"
+        },
+        {
+          "nombre": "ubicacion",
+          "tipo_dato": "varchar",
+          "longitud": 200,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Dirección física del invernadero"
+        },
+        {
+          "nombre": "latitud",
+          "tipo_dato": "decimal",
+          "longitud": 10,
+          "precision": 8,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Coordenada latitud GPS"
+        },
+        {
+          "nombre": "longitud",
+          "tipo_dato": "decimal",
+          "longitud": 11,
+          "precision": 8,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Coordenada longitud GPS"
+        },
+        {
+          "nombre": "area_m2",
+          "tipo_dato": "decimal",
+          "longitud": 10,
+          "precision": 2,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Área del invernadero en metros cuadrados"
+        },
+        {
+          "nombre": "fecha_instalacion",
+          "tipo_dato": "date",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Fecha de instalación del invernadero"
+        },
+        {
+          "nombre": "estado",
+          "tipo_dato": "varchar",
+          "longitud": 20,
+          "nulo": false,
+          "pk": false,
+          "default": "activo",
+          "descripcion": "Estado del invernadero: activo, mantenimiento, inactivo"
+        }
+      ],  "constrains": [
+        {
+      "nombre":"invernadero_pkey",
+      "tipo":"primarykey",
+      "atributo":"id",
+      "descripcion":"Test"
+        }
+      ], "relaciones": [
+
+      ]
+    },
+    
+    {
+      "nombre": "cultivo",
+      "descripcion": "Tipos de cultivos que se pueden sembrar",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "serial",
+          "longitud": 0,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Identificador único del tipo de cultivo"
+        },
+        {
+          "nombre": "nombre_comun",
+          "tipo_dato": "varchar",
+          "longitud": 100,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Nombre común del cultivo"
+        },
+        {
+          "nombre": "nombre_cientifico",
+          "tipo_dato": "varchar",
+          "longitud": 150,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Nombre científico del cultivo"
+        },
+        {
+          "nombre": "ph_optimo_min",
+          "tipo_dato": "decimal",
+          "longitud": 3,
+          "precision": 1,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "pH mínimo óptimo para el cultivo"
+        },
+        {
+          "nombre": "ph_optimo_max",
+          "tipo_dato": "decimal",
+          "longitud": 3,
+          "precision": 1,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "pH máximo óptimo para el cultivo"
+        },
+        {
+          "nombre": "temp_optima_min",
+          "tipo_dato": "decimal",
+          "longitud": 4,
+          "precision": 1,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Temperatura mínima óptima en °C"
+        },
+        {
+          "nombre": "temp_optima_max",
+          "tipo_dato": "decimal",
+          "longitud": 4,
+          "precision": 1,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Temperatura máxima óptima en °C"
+        },
+        {
+          "nombre": "dias_cosecha",
+          "tipo_dato": "integer",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Días aproximados hasta la cosecha"
+        }
+      ], "constrains": [
+        {
+      "nombre":"cultivo_pkey",
+      "tipo":"primarykey",
+      "atributo":"id",
+      "descripcion":"Test"
+        }
+      ], "relaciones": [
+
+      ]
+    },
+    
+    {
+      "nombre": "ciclo_cultivo",
+      "descripcion": "Registro de ciclos de cultivo en cada invernadero",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "serial",
+          "longitud": 0,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Identificador único del ciclo"
+        },
+        {
+          "nombre": "invernadero_id",
+          "tipo_dato": "integer",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "fk": true,
+          "referencia": "invernadero(id)",
+          "descripcion": "Referencia al invernadero"
+        },
+        {
+          "nombre": "cultivo_id",
+          "tipo_dato": "integer",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "fk": true,
+          "referencia": "cultivo(id)",
+          "descripcion": "Referencia al tipo de cultivo"
+        },
+        {
+          "nombre": "fecha_siembra",
+          "tipo_dato": "date",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Fecha de siembra del ciclo"
+        },
+        {
+          "nombre": "fecha_cosecha_estimada",
+          "tipo_dato": "date",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Fecha estimada de cosecha"
+        },
+        {
+          "nombre": "fecha_cosecha_real",
+          "tipo_dato": "date",
+          "longitud": 0,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Fecha real de cosecha"
+        },
+        {
+          "nombre": "cantidad_plantas",
+          "tipo_dato": "integer",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Número de plantas sembradas"
+        },
+        {
+          "nombre": "estado",
+          "tipo_dato": "varchar",
+          "longitud": 20,
+          "nulo": false,
+          "pk": false,
+          "default": "en_curso",
+          "descripcion": "Estado: planificado, en_curso, cosechado, abandonado"
+        }
+      
+      ], "constrains": [
+        {
+      "nombre":"ciclo_cultivo_pkey",
+      "tipo":"primarykey",
+      "atributo":"id",
+      "descripcion":"Test"
+        }
+      ], "relaciones": [
+        {
+      "tabla_referenciada":"cultivo",
+      "campo_referenciado":"id",
+      "campo_local":"cultivo_id",
+      "descripcion":"Test"
+        }
+      ]
+    },
+    
+    {
+      "nombre": "sensor",
+      "descripcion": "Sensores IoT instalados en los invernaderos",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "serial",
+          "longitud": 0,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Identificador único del sensor"
+        },
+        {
+          "nombre": "invernadero_id",
+          "tipo_dato": "integer",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "fk": true,
+          "referencia": "invernadero(id)",
+          "descripcion": "Referencia al invernadero"
+        },
+        {
+          "nombre": "tipo_sensor",
+          "tipo_dato": "varchar",
+          "longitud": 50,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Tipo: temperatura, humedad, ph, ec, luz, co2"
+        },
+        {
+          "nombre": "marca",
+          "tipo_dato": "varchar",
+          "longitud": 50,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Marca del sensor"
+        },
+        {
+          "nombre": "modelo",
+          "tipo_dato": "varchar",
+          "longitud": 50,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Modelo del sensor"
+        },
+        {
+          "nombre": "ubicacion_sensor",
+          "tipo_dato": "varchar",
+          "longitud": 100,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Ubicación específica dentro del invernadero"
+        },
+        {
+          "nombre": "fecha_instalacion",
+          "tipo_dato": "date",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Fecha de instalación del sensor"
+        },
+        {
+          "nombre": "estado",
+          "tipo_dato": "varchar",
+          "longitud": 20,
+          "nulo": false,
+          "pk": false,
+          "default": "activo",
+          "descripcion": "Estado: activo, mantenimiento, inactivo"
+        }
+      ], "constrains": [
+        {
+      "nombre":"sensores_pkey",
+      "tipo":"primarykey",
+      "atributo":"id",
+      "descripcion":"Test"
+        }
+      ], "relaciones": [
+
+      ]
+    },
+    
+    {
+      "nombre": "lectura_sensor",
+      "descripcion": "Lecturas históricas de los sensores IoT",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "bigserial",
+          "longitud": 0,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Identificador único de la lectura"
+        },
+        {
+          "nombre": "sensor_id",
+          "tipo_dato": "integer",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "fk": true,
+          "referencia": "sensor(id)",
+          "descripcion": "Referencia al sensor"
+        },
+        {
+          "nombre": "timestamp",
+          "tipo_dato": "timestamp",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "default": "CURRENT_TIMESTAMP",
+          "descripcion": "Fecha y hora de la lectura"
+        },
+        {
+          "nombre": "valor",
+          "tipo_dato": "decimal",
+          "longitud": 10,
+          "precision": 4,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Valor medido por el sensor"
+        },
+        {
+          "nombre": "unidad",
+          "tipo_dato": "varchar",
+          "longitud": 20,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Unidad de medida: °C, %, pH, µS/cm, lux, ppm"
+        }
+      ], "constrains": [
+        {
+      "nombre":"lectura_sensor_pkey",
+      "tipo":"primarykey",
+      "atributo":"id",
+      "descripcion":"Test"
+        }
+      ], "relaciones": [
+
+      ]
+    },
+    
+    {
+      "nombre": "alerta",
+      "descripcion": "Alertas generadas por condiciones anormales",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "serial",
+          "longitud": 0,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Identificador único de la alerta"
+        },
+        {
+          "nombre": "invernadero_id",
+          "tipo_dato": "integer",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "fk": true,
+          "referencia": "invernadero(id)",
+          "descripcion": "Referencia al invernadero"
+        },
+        {
+          "nombre": "sensor_id",
+          "tipo_dato": "integer",
+          "longitud": 0,
+          "nulo": true,
+          "pk": false,
+          "fk": true,
+          "referencia": "sensor(id)",
+          "descripcion": "Sensor que generó la alerta (opcional)"
+        },
+        {
+          "nombre": "tipo_alerta",
+          "tipo_dato": "varchar",
+          "longitud": 50,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Tipo: temperatura_alta, temperatura_baja, ph_fuera_rango, etc"
+        },
+        {
+          "nombre": "nivel_severidad",
+          "tipo_dato": "varchar",
+          "longitud": 20,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Severidad: baja, media, alta, crítica"
+        },
+        {
+          "nombre": "descripcion",
+          "tipo_dato": "text",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Descripción detallada de la alerta"
+        },
+        {
+          "nombre": "timestamp_inicio",
+          "tipo_dato": "timestamp",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "default": "CURRENT_TIMESTAMP",
+          "descripcion": "Momento en que se generó la alerta"
+        },
+        {
+          "nombre": "timestamp_fin",
+          "tipo_dato": "timestamp",
+          "longitud": 0,
+          "nulo": true,
+          "pk": false,
+          "descripcion": "Momento en que se resolvió la alerta"
+        },
+        {
+          "nombre": "estado",
+          "tipo_dato": "varchar",
+          "longitud": 20,
+          "nulo": false,
+          "pk": false,
+          "default": "activa",
+          "descripcion": "Estado: activa, resuelta, ignorada"
+        }
+      ], "constrains": [
+        {
+      "nombre":"alerta_pkey",
+      "tipo":"primarykey",
+      "atributo":"id",
+      "descripcion":"Test"
+        }
+      ], "relaciones": [
+
+      ]
+    },
+    
+    {
+      "nombre": "usuario",
+      "descripcion": "Usuarios del sistema de gestión",
+      "atributos": [
+        {
+          "nombre": "id",
+          "tipo_dato": "serial",
+          "longitud": 0,
+          "nulo": false,
+          "pk": true,
+          "descripcion": "Identificador único del usuario"
+        },
+        {
+          "nombre": "nombre_completo",
+          "tipo_dato": "varchar",
+          "longitud": 150,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Nombre completo del usuario"
+        },
+        {
+          "nombre": "email",
+          "tipo_dato": "varchar",
+          "longitud": 100,
+          "nulo": false,
+          "pk": false,
+          "unique": true,
+          "descripcion": "Correo electrónico (único)"
+        },
+        {
+          "nombre": "password_hash",
+          "tipo_dato": "varchar",
+          "longitud": 255,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Contraseña hasheada"
+        },
+        {
+          "nombre": "rol",
+          "tipo_dato": "varchar",
+          "longitud": 20,
+          "nulo": false,
+          "pk": false,
+          "descripcion": "Rol: administrador, operador, observador"
+        },
+        {
+          "nombre": "fecha_registro",
+          "tipo_dato": "timestamp",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "default": "CURRENT_TIMESTAMP",
+          "descripcion": "Fecha de registro en el sistema"
+        },
+        {
+          "nombre": "activo",
+          "tipo_dato": "boolean",
+          "longitud": 0,
+          "nulo": false,
+          "pk": false,
+          "default": "true",
+          "descripcion": "Estado de activación del usuario"
+        }
+      ], "constrains": [
+        {
+      "nombre":"usuario_pkey",
+      "tipo":"primarykey",
+      "atributo":"id",
+      "descripcion":"Test"
+        }
+      ], "relaciones": [
+
+      ]
+    }
+  ]
+}
